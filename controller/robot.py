@@ -50,24 +50,37 @@ class Robot:
     def r_forward(self):
         self.l_motor.r_forward()
         self.r_motor.r_forward()
+        if sim is True:
+            print("moving forward")
 
     def r_reverse(self):
         self.l_motor.r_reverse()
         self.r_motor.r_reverse()
+        if sim is True:
+            print("moving reverse")
 
     def r_right(self):
         self.l_motor.r_forward()
         self.r_motor.r_reverse()
+        if sim is True:
+            print("moving right")
 
     def r_left(self):
         self.l_motor.r_reverse()
         self.r_motor.r_forward()
+        if sim is True:
+            print("moving left")
 
     def halt(self):
         self.l_motor.r_stop()
         self.r_motor.r_stop()
+        if sim is True:
+            print("halt")
 
     def quit(self):
         self.halt()
-        GPIO.cleanup()
+        if sim is False:
+            GPIO.cleanup()
+        else:
+            print("quit")
         quit(0)

@@ -5,7 +5,7 @@ import transmitter
 class KeyboardInter:
     # Get the curses window, turn off echoing of keyboard to screen, turn on
     # instant (no waiting) key response, and use special values for cursor keys
-    def __init__(self, tx: transmitter) -> None:
+    def __init__(self, tx: transmitter.Transmitter) -> None:
         self.screen = curses.initscr()
         curses.noecho()
         curses.cbreak()

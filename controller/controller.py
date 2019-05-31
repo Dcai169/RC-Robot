@@ -15,19 +15,20 @@ class Controller:
         try:
             while True:
                 data, addr = self.sock.recvfrom(1024)  # buffer size is 1024 bytes
-                data = data.decode("UTF-8")
-                if data is "quit":
+                data = str(data.decode("UTF-8"))
+                # print("command {0} from {1}".format(data, addr[0]))
+                if data == "quit":
                     self.dt.quit()
                     break
-                if data is "forward":
+                if data == "forward":
                     self.dt.r_forward()
-                if data is "reverse":
+                if data == "reverse":
                     self.dt.r_reverse()
-                if data is "right":
+                if data == "right":
                     self.dt.r_right()
-                if data is "left":
+                if data == "left":
                     self.dt.r_left()
-                if data is "halt":
+                if data == "halt":
                     self.dt.halt()
         finally:
             self.dt.quit()
