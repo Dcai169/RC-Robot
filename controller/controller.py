@@ -21,7 +21,7 @@ class Controller:
                     # quit(0)
                     pass
                 
-                print("command {0} from {1}".format(data, addr[0]))
+                # print("command {0} from {1}".format(data, addr[0]))
                 if data == "quit":
                     self.dt.quit()
                     break
