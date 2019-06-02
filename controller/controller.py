@@ -14,9 +14,14 @@ class Controller:
     def drive(self):
         try:
             while True:
-                data, addr = self.sock.recvfrom(1024)  # buffer size is 1024 bytes
-                data = str(data.decode("UTF-8"))
-                # print("command {0} from {1}".format(data, addr[0]))
+                try:
+                    data, addr = self.sock.recvfrom(1024)  # buffer size is 1024 bytes
+                    data = str(data.decode("UTF-8"))
+                except KeyboardInterrupt:
+                    # quit(0)
+                    pass
+                
+                print("command {0} from {1}".format(data, addr[0]))
                 if data == "quit":
                     self.dt.quit()
                     break

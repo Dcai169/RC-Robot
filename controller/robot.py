@@ -1,17 +1,22 @@
-sim = False
 try:
     import RPi.GPIO as GPIO
-    GPIO.setmode(GPIO.BCM)
+    GPIO.setmode(GPIO.BOARD)
+    print("This module will run in real mode")
+    sim = False
 except ModuleNotFoundError:
     print("This module will run in sim mode.")
     sim = True
+from time import sleep
 
 
 class Motor:
     def __init__(self, label: str, forward_pin: int, reverse_pin: int):
+        GPIO.setmode(GPIO.BOARD)
         self.label = label
         self.reverse_pin = reverse_pin
         self.forward_pin = forward_pin
+        self.gpio_setup()
+        # print("Motor {0}: GPIO mode {1}".format(self.label, GPIO.getmode()))
 
     def gpio_setup(self):
         if sim is False:
@@ -35,8 +40,8 @@ class Motor:
 
     def r_stop(self):
         if sim is False:
-            GPIO.output(self.reverse_pin, False)
             GPIO.output(self.forward_pin, False)
+            GPIO.output(self.reverse_pin, False)
         else:
             print("Motor {0} stopped".format(self.label))
 
@@ -46,6 +51,7 @@ class Robot:
         self.name = name
         self.l_motor = l_motor
         self.r_motor = r_motor
+        # print("Robot {0}: GPIO mode {1}".format(self.name, GPIO.getmode()))
 
     def r_forward(self):
         self.l_motor.r_forward()
@@ -78,9 +84,13 @@ class Robot:
             print("halt")
 
     def quit(self):
+        GPIO.setmode(GPIO.BOARD)
+        self.l_motor.gpio_setup()
+        self.r_motor.gpio_setup()
         self.halt()
         if sim is False:
             GPIO.cleanup()
         else:
             print("quit")
-        quit(0)
+        sleep(1)
+        # quit(0)

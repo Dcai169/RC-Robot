@@ -8,5 +8,6 @@ class Transmitter:
         self.sock = socket.socket(socket.AF_INET,  # Internet
                                   socket.SOCK_DGRAM)  # UDP
 
-    def send(self, message) -> None:
+    def send(self, message):
         self.sock.sendto(bytes(str(message), encoding="UTF-8"), (self.target_ip, self.target_port))
+        # print("Message {0} sent to IP {1} on Port {2}".format(message, self.target_ip, self.target_port))
